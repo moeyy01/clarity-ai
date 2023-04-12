@@ -49,7 +49,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
 
   const handleStream = async (sources: Source[]) => {
     try {
-      const prompt = endent`根据以下来源为查询提供 2-3 句话的答案。 保持原创、简洁、准确和有帮助。 在每个句子后（不仅仅是最后）引用来源 [1] 或 [2] 或 [3] 来支持你的答案（例如：正确：[1]，正确：[2][3]，不正确：[1,2]).
+      const prompt = endent`Provide a 2-3 sentence answer to the query based on the following sources. Be original, concise, accurate, and helpful. Cite sources as [1] or [2] or [3] after each sentence (not just the very end) to back up your answer (Ex: Correct: [1], Correct: [2][3], Incorrect: [1, 2]).
       
       ${sources.map((source, idx) => `Source [${idx + 1}]:\n${source.text}`).join("\n\n")}
       `;
@@ -123,7 +123,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
     if (CLARITY_KEY) {
       setApiKey(CLARITY_KEY);
     } else {
-      setShowSettings(false);
+      setShowSettings(true);
     }
 
     inputRef.current?.focus();
@@ -143,7 +143,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
             <div className="ml-1 text-center text-4xl">Clarity</div>
           </div>
 
-          {apiKey.length != 50 ? (
+          {apiKey.length === 51 ? (
             <div className="relative w-full">
               <IconSearch className="text=[#D4D4D8] absolute top-3 w-10 left-1 h-6 rounded-full opacity-50 sm:left-3 sm:top-4 sm:h-8" />
 
@@ -179,7 +179,6 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
             <>
               <input
                 type="password"
-                placeholder="输入你的OpenAI Key"
                 className="max-w-[400px] block w-full rounded-md border border-gray-300 p-2 text-black shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
                 value={apiKey}
                 onChange={(e) => {
