@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Clarity AI</title>
+        <title>AI 搜索 - Moeyy</title>
         <meta
           name="description"
           content="AI-powered search."
@@ -28,7 +28,7 @@ export default function Home() {
         />
       </Head>
       <div className="h-screen overflow-auto bg-[#18181C] text-[#D4D4D8]">
-        <a
+        {/* <a
           className="absolute top-0 right-12 p-4 cursor-pointer"
           href="https://twitter.com/mckaywrigley"
           target="_blank"
@@ -44,7 +44,7 @@ export default function Home() {
           rel="noreferrer"
         >
           <IconBrandGithub />
-        </a>
+        </a> */}
 
         {answer ? (
           <Answer
