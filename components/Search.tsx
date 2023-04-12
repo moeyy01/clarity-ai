@@ -13,7 +13,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState<string>("");
-  const [apiKey, setApiKey] = useState<string>("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");
+  const [apiKey, setApiKey] = useState<string>("");
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -100,10 +100,10 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
   };
 
   const handleSave = () => {
-    // if (apiKey.length !== 51) {
-    //   alert("Please enter a valid API key.");
-    //   return;
-    // }
+    if (apiKey.length !== 51) {
+      alert("Please enter a valid API key.");
+      return;
+    }
 
     localStorage.setItem("CLARITY_KEY", apiKey);
 
@@ -123,7 +123,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
     if (CLARITY_KEY) {
       setApiKey(CLARITY_KEY);
     } else {
-      setShowSettings(true);
+      setShowSettings(false);
     }
 
     inputRef.current?.focus();
@@ -143,7 +143,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
             <div className="ml-1 text-center text-4xl">Clarity</div>
           </div>
 
-          {/* {apiKey.length === 51 ? ( */}
+          {apiKey.length != 50 ? (
             <div className="relative w-full">
               <IconSearch className="text=[#D4D4D8] absolute top-3 w-10 left-1 h-6 rounded-full opacity-50 sm:left-3 sm:top-4 sm:h-8" />
 
@@ -164,21 +164,22 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
                 />
               </button>
             </div>
-          {/* ) : (
+          ) : (
             <div className="text-center text-[#D4D4D8]">Please enter your OpenAI API key.</div>
-          )} */}
+          )}
 
-          {/* <button
+          <button
             className="flex cursor-pointer items-center space-x-2 rounded-full border border-zinc-600 px-3 py-1 text-sm text-[#D4D4D8] hover:text-white"
             onClick={() => setShowSettings(!showSettings)}
           >
             {showSettings ? "Hide" : "Show"} Settings
-          </button> */}
+          </button>
 
-          {/* {showSettings && (
+          {showSettings && (
             <>
               <input
                 type="password"
+                placeholder="输入你的OpenAI Key"
                 className="max-w-[400px] block w-full rounded-md border border-gray-300 p-2 text-black shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
                 value={apiKey}
                 onChange={(e) => {
@@ -206,7 +207,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
                 </div>
               </div>
             </>
-          )} */}
+          )}
         </div>
       )}
     </>
