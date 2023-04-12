@@ -13,7 +13,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState<string>("");
-  const [apiKey, setApiKey] = useState<string>("");
+  const [apiKey, setApiKey] = useState<string>("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");
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -100,10 +100,10 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
   };
 
   const handleSave = () => {
-    if (apiKey.length !== 51) {
-      alert("Please enter a valid API key.");
-      return;
-    }
+    // if (apiKey.length !== 51) {
+    //   alert("Please enter a valid API key.");
+    //   return;
+    // }
 
     localStorage.setItem("CLARITY_KEY", apiKey);
 
@@ -134,13 +134,13 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
       {loading ? (
         <div className="flex items-center justify-center pt-64 sm:pt-72 flex-col">
           <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-          <div className="mt-8 text-2xl">正在搜索...</div>
+          <div className="mt-8 text-2xl">Getting answer...</div>
         </div>
       ) : (
         <div className="mx-auto flex h-full w-full max-w-[750px] flex-col items-center space-y-6 px-3 pt-32 sm:pt-64">
           <div className="flex items-center">
             <IconBolt size={36} />
-            <div className="ml-1 text-center text-4xl">AI 搜索</div>
+            <div className="ml-1 text-center text-4xl">Clarity</div>
           </div>
 
           {/* {apiKey.length === 51 ? ( */}
@@ -151,7 +151,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
                 ref={inputRef}
                 className="h-12 w-full rounded-full border border-zinc-600 bg-[#2A2A31] pr-12 pl-11 focus:border-zinc-800 focus:bg-[#18181C] focus:outline-none focus:ring-2 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
                 type="text"
-                placeholder="一些问题..."
+                placeholder="Ask anything..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
