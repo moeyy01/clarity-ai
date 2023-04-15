@@ -4,12 +4,40 @@ import * as cheerio from "cheerio";
 import { JSDOM } from "jsdom";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cleanSourceText } from "../../utils/sources";
+import {Ratelimit} from "@upstash/ratelimit";
+import {Redis} from "@upstash/redis";
+import requestIp from "request-ip";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || "",
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
+})
+
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.fixedWindow(1, "1 m"),
+  analytics: false,
+});
+
+
 
 type Data = {
   sources: Source[];
 };
 
 const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const ipIdentifier = req.headers['x-real-cdn-ip'] ?? requestIp.getClientIp(req)
+  const result = await ratelimit.limit(`ai-search_${ipIdentifier}`);
+  res.setHeader('X-RateLimit-Limit', result.limit)
+  res.setHeader('X-RateLimit-Remaining', result.remaining)
+  res.setHeader('X-Reques-IP', ipIdentifier || '?')
+
+  if (!result.success) {
+    res.statusCode = 429;
+    res.end(JSON.stringify('搜索过快，请等待片刻。'));
+    return
+  }
+
   try {
     const { query, model } = req.body as {
       query: string;
