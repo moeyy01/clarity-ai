@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Clarity AI</title>
+        <title>AI Search - Moeyy</title>
         <meta
           name="description"
           content="AI-powered search."
@@ -24,7 +24,7 @@ export default function Home() {
         />
         <link
           rel="icon"
-          href="/favicon.png"
+          href="/favicon.ico"
         />
       </Head>
       <div className="h-screen overflow-auto bg-[#18181C] text-[#D4D4D8]">
