@@ -72,7 +72,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
     const filteredSources = sources.filter((source) => source !== undefined);
 
     for (const source of filteredSources) {
-      source.text = source.text.slice(0, 500);
+      source.text = source.text.slice(0, 250);
     }
 
     res.status(200).json({ sources: filteredSources });
