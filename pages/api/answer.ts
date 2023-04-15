@@ -11,7 +11,7 @@ const handler = async (req: Request): Promise<Response> => {
       apiKey: string;
     };
 
-    const stream = await OpenAIStream(prompt, process.env.OPENAI_API_KEY);
+    const stream = await OpenAIStream(prompt, process.env.OPENAI_API_KEY ?? "");
 
     return new Response(stream);
   } catch (error) {
