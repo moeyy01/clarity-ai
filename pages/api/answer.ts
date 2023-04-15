@@ -1,7 +1,7 @@
 import { OpenAIStream } from "@/utils/answer";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import requestIp from "request-ip";
+// import requestIp from "request-ip";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL || "",
@@ -19,8 +19,8 @@ export const config = {
   runtime: "edge"
 };
 
-const handler = async (req, res): Promise<Response> => {
-  const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? requestIp.getClientIp(req)
+const handler = async (req: Request, res: Response): Promise<Response> => {
+  const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? req.headers.get('x-real-ip')
   const result = await ratelimit.limit(`ai-search_${ipIdentifier}`);
   res.headers.set('X-RateLimit-Limit', result.limit.toString())
   res.headers.set('X-RateLimit-Remaining', result.remaining.toString())
