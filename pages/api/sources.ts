@@ -19,7 +19,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
       model: OpenAIModel;
     };
 
-    const sourceCount = 4;
+    const sourceCount = 2;
 
     // GET LINKS
     const response = await fetch(`https://www.google.com/search?q=${query}`);
@@ -72,7 +72,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
     const filteredSources = sources.filter((source) => source !== undefined);
 
     for (const source of filteredSources) {
-      source.text = source.text.slice(0, 1500);
+      source.text = source.text.slice(0, 500);
     }
 
     res.status(200).json({ sources: filteredSources });
