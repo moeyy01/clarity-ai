@@ -19,7 +19,7 @@ export const config = {
   runtime: "edge"
 };
 
-const handler = async (req: Request, res: Response): Promise<Response> => {
+const handler = async (req, res): Promise<Response> => {
   const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? requestIp.getClientIp(req)
   const result = await ratelimit.limit(`ai-search_${ipIdentifier}`);
   res.headers.set('X-RateLimit-Limit', result.limit.toString())
