@@ -49,7 +49,7 @@ export const Answer: FC<AnswerProps> = ({ searchQuery, answer, done, onReset }) 
             onClick={onReset}
           >
             <IconReload size={18} />
-            <div className="ml-2">问新问题</div>
+            <div className="ml-2">搜索新问题</div>
           </button>
         </>
       )}
