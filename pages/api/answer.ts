@@ -27,7 +27,7 @@ const handler = async (req: Request, res: Response): Promise<Response> => {
   // res.headers.set('X-Reques-IP', ipIdentifier || '?')
 
   if (!result.success) {
-    return new Response("搜索过快，请等待片刻。", { status: 200 });
+    return new Response("Error: 搜索过快，请等待片刻。", { status: 200 });
   }
   try {
     const { prompt, apiKey } = (await req.json()) as {
