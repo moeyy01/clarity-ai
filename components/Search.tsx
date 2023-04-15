@@ -59,8 +59,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
         headers: {
           "Content-Type": "application/json"
         },
-        // body: JSON.stringify({ prompt, apiKey })
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({ prompt, apiKey })
       });
 
       if (!response.ok) {
