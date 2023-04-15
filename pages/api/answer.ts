@@ -22,9 +22,9 @@ export const config = {
 const handler = async (req: Request, res: Response): Promise<Response> => {
   const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? req.headers.get('x-real-ip')
   const result = await ratelimit.limit(`ai-search_${ipIdentifier}`);
-  res.headers.set('X-RateLimit-Limit', result.limit.toString())
-  res.headers.set('X-RateLimit-Remaining', result.remaining.toString())
-  res.headers.set('X-Reques-IP', ipIdentifier || '?')
+  res.setHeader('X-RateLimit-Limit', result.limit)
+  res.setHeader('X-RateLimit-Remaining', result.remaining)
+  res.setHeader('X-Reques-IP', ipIdentifier || '?')
 
   if (!result.success) {
     return new Response("搜索过快，请等待片刻。", { status: 429 });
