@@ -24,7 +24,7 @@ export const Answer: FC<AnswerProps> = ({ searchQuery, answer, done, onReset }) 
       {done && (
         <>
           <div className="border-b border-zinc-800 pb-4">
-            <div className="text-md text-blue-500">Sources</div>
+            <div className="text-md text-blue-500">来源</div>
 
             {searchQuery.sourceLinks.map((source, index) => (
               <div
