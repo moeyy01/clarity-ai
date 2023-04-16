@@ -14,6 +14,7 @@ const ratelimit = new Ratelimit({
   analytics: false,
 });
 
+export const localKey = import.meta.env.OPENAI_API_KEY || ""
 
 export const config = {
   runtime: "edge"
@@ -34,8 +35,7 @@ const handler = async (req: Request, res: Response): Promise<Response> => {
       prompt: string;
       apiKey: string;
     };
-
-    const stream = await OpenAIStream(prompt, process.env.OPENAI_API_KEY ?? req.headers.get('open-key') ?? "");
+    const stream = await OpenAIStream(prompt, localKey ?? req.headers.get('open-key') ?? "");
 
     return new Response(stream);
   } catch (error) {
