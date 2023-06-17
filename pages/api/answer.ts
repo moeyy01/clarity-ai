@@ -27,7 +27,7 @@ export const config = {
 const handler = async (req: Request, res: Response): Promise<Response> => {
   const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? req.headers.get('x-real-ip')
   // const result_min = await ratelimit_min.limit(`ai-search_min${ipIdentifier}`);
-  const result_day = await ratelimit_day.limit(`ai-search_day${ipIdentifier}`);
+  const result_day = await ratelimit_day.limit(`ai-search-answer-${ipIdentifier}`);
 
   // if (!result_min.success) {
   //   return new Response("Error: 搜索过快，请等待1分钟。", { status: 200 });
