@@ -16,7 +16,7 @@ const ratelimit_min = new Ratelimit({
 
 const ratelimit_day = new Ratelimit({
   redis: redis,
-  limiter: Ratelimit.fixedWindow(1, "1 m"),
+  limiter: Ratelimit.fixedWindow(10, "12 h"),
   analytics: false,
 });
 
