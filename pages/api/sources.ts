@@ -31,7 +31,7 @@ const ratelimit_filteredSources = [
 
 const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  const ipIdentifier = req.headers.get['x-real-cdn-ip'] ?? req.headers.get['x-real-ip']
+  const ipIdentifier = req.headers['x-real-cdn-ip'] ?? req.headers['x-real-ip']
   const result = await ratelimit.limit(`ai-search-sources-${ipIdentifier}`);
 
   if (!result.success) {
