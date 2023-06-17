@@ -4,14 +4,39 @@ import * as cheerio from "cheerio";
 import { JSDOM } from "jsdom";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cleanSourceText } from "../../utils/sources";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || "",
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
+})
 
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.fixedWindow(10, "12 h"),
+  analytics: false,
+});
 
 type Data = {
   sources: Source[];
 };
 
+const ratelimit_filteredSources = [
+  {
+      url: "https://moeyy.cn/ai-search/",
+      text: "今天的搜索次数达到上限。"
+  }
+]
+
 const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+  const ipIdentifier = req.headers.get('x-real-cdn-ip') ?? req.headers.get('x-real-ip')
+  const result = await ratelimit.limit(`ai-search_search${ipIdentifier}`);
+
+  if (!result.success) {
+    return res.status(200).json({ sources: ratelimit_filteredSources });
+  }
 
   try {
     const { query, model } = req.body as {
