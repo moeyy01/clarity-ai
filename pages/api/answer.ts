@@ -2,7 +2,7 @@ import { OpenAIStream } from "@/utils/answer";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 // import requestIp from "request-ip";
-export const localKey = import.meta.env.OPENAI_API_KEY || ""
+export const localKey = process.env.OPENAI_API_KEY || ""
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL || "",
   token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
