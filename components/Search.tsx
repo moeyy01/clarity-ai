@@ -49,7 +49,7 @@ export const Search: FC<SearchProps> = ({ onSearch, onAnswerUpdate, onDone }) =>
 
   const handleStream = async (sources: Source[]) => {
     try {
-      const prompt = endent`根据以下来源为查询提供1-2句话的答案。保持原创、简洁、准确和有帮助。在每个句子后引用来源 [1] 或 [2] 来支持你的答案（例如：正确：[1]，正确：[2]，不正确：[1,2])。所有回答都要使用中文，并且不超过400字。
+      const prompt = endent`
       
       ${sources.map((source, idx) => `Source [${idx + 1}]:\n${source.text}`).join("\n\n")}
       `;
