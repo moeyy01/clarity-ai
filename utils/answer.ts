@@ -15,7 +15,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
       model: OpenAIModel.DAVINCI_TURBO,
       messages: [
         { role: "system", content: "You are a helpful assistant that accurately answers the user's queries based on the given text." },
-        { role: "user", content: "Provide a 1-2 sentence answer to the query based on the sources below. Keep it original, concise, accurate and helpful. Support your answer by citing the source [1] or [2] after each sentence (eg: True: [1], True: [2], Incorrect: [1,2]). All answers must be in Chinese and should not exceed 400 characters: "+prompt }
+        { role: "user", content: "根据以下来源为查询提供1-2句话的答案。保持原创、简洁、准确和有帮助。在每个句子后引用来源 [1] 或 [2] 来支持你的答案（例如：正确：[1]，正确：[2]，不正确：[1,2])。所有回答都要使用中文，并且不超过400字。"+prompt }
       ],
       max_tokens: 1000,
       temperature: 0.0,
